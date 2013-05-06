@@ -1,12 +1,16 @@
 #include "mydate.h"
+#include <iostream>
+
+
+using namespace MyDate;
 
 /**
  * Wert des Tages wird zurückgegeben.
  * @brief MyDate::Days::value
  * @return
  */
-unsigned int MyDate::Days::value() const {
-    return MyDate::Days::m_day;
+unsigned int Days::value() const {
+    return Days::m_day;
 }
 
 /**
@@ -14,7 +18,7 @@ unsigned int MyDate::Days::value() const {
  * @brief value
  * @return
  */
-unsigned int MyDate::Months::value() const {return m_month; }
+unsigned int Months::value() const {return m_month; }
 
 
 /**
@@ -22,7 +26,7 @@ unsigned int MyDate::Months::value() const {return m_month; }
  * @brief value
  * @return
  */
-unsigned int MyDate::Years::value() const {return m_year; }
+unsigned int Years::value() const {return m_year; }
 
 
 /**
@@ -30,18 +34,39 @@ unsigned int MyDate::Years::value() const {return m_year; }
   * @brief MyDate::Date::day
   * @return
   */
- MyDate::Days MyDate::Date::day() const {return days;}
+ Days Date::day() const {return days;}
 
  /**
   *Gibt den Monat des Datums zurück
   * @brief MyDate::Date::month
   * @return
   */
- MyDate::Months MyDate::Date::month() const { return months; }
+ Months Date::month() const { return months; }
 
 
  /** Gibt das Jahr des Datums zurück
  * @brief MyDate::Date::year
  * @return
  */
-MyDate::Years MyDate::Date::year() const { return years; }
+Years Date::year() const { return years; }
+
+
+Days::operator unsigned int() const{
+    return value();
+}
+
+Months::operator unsigned int() const{
+    return value();
+}
+
+
+Years::operator unsigned int() const{
+    return value();
+
+}
+
+
+
+
+
+
