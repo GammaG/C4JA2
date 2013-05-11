@@ -77,11 +77,11 @@ public:
 
 }
 
-
+/**
 std::ostream& operator<<(std::ostream &lhs,const MyDate::Date &rhs){
     lhs << rhs.day().value() << "." << rhs.month().value() << "." << rhs.year().value();
     return lhs;
 }
-
+*/
 
 #endif // MYDATE_H
