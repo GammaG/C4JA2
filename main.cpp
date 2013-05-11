@@ -33,6 +33,8 @@ int main()
         assert(0 == myday);
         assert(12 == mymonth);
         assert(2012 == CONST_YEAR);
+        Date x(1,1,2012);
+        assert(x.daysInMonth(Months(2),Years(2012)).value()==28);
     }
 
 #if 0

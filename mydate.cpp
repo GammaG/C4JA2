@@ -65,3 +65,32 @@ Years::operator unsigned int() const{
     return value();
 
 }
+
+/**
+* Gibt zurück ob ein übergebenes Jahr ein Schaltjahr ist.
+*/
+static bool isLeapYear(Years y){
+    return (y%4) == 0;
+
+}
+
+/**
+* Gibt die Anzahl der Tage von einem übergebenen Monat zurück
+*/
+static Days daysInMonth(Months m, Years y){
+    switch(m){
+    case 2: if(isLeapYear(y)){
+            return Days(29); break;
+            }
+            else {
+            return Days(28); break;
+            }
+    case 4: return Days(30); break;
+    case 6: return Days(30); break;
+    case 9: return Days(30); break;
+    case 11: return Days(30); break;
+    default: return Days(31); break;
+
+    }
+
+}
