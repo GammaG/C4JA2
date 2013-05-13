@@ -111,7 +111,7 @@ int main()
         assert(x == Date(5,1,2012));
 
     }
-#if 0
+
 
     {
         Date d3(1,1,2015);
@@ -130,7 +130,8 @@ int main()
 
         // verifizieren Sie, dass die folgende Zeile NICHT compiliert,
         // und kommentieren Sie sie dann aus
-        // d3 += 1;
+        d3 += 1;
+        // er compliert aber ändert nichts am objekt
     }
 
     {
@@ -154,7 +155,7 @@ int main()
         assert(dd5 == Date(2,4,2018));
 
     }
-#endif
+
 
     cout << "all tests completed." << endl;
 

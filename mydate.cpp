@@ -89,8 +89,12 @@ if(y%4==0){
 }
 
 /**
-* Gibt die Anzahl der Tage von einem übergebenen Monat zurück
-*/
+ * Gibt die Anzahl der Tage von einem übergebenen Monat zurück
+ * @brief MyDate::Date::daysInMonth
+ * @param m
+ * @param y
+ * @return
+ */
 MyDate::Days MyDate::Date::daysInMonth(Months m, Years y){
     switch(m){
     case 2: if(isLeapYear(y)&& y != 0){
@@ -116,7 +120,7 @@ MyDate::Date& MyDate::Date::operator+= (const Days& lhs){
    unsigned int temp = this->days.value();
    temp += lhs.value();
 
-   if(daysInMonth(this->months,this->years).value()<temp){
+   while(daysInMonth(this->months,this->years).value()<temp){
       temp -= daysInMonth(this->months,this->years).value();
       unsigned int month = this->months.value();
       month++;
@@ -143,12 +147,9 @@ MyDate::Date& MyDate::Date::operator+= (const Months& lhs){
    unsigned int month = this->months.value();
    month += lhs.value();
 
-   if(month > 12){
-       month = 1;
-       unsigned int year = this->years.value();
-       year++;
-
-       this->years.setYears(year);
+   while(month > 12){
+       month -= 12;
+       this->years.setYears(this->years+1);
 
    }
 
@@ -198,7 +199,7 @@ MyDate::Date& MyDate::Date::operator-= (const Days& lhs){
    unsigned int temp = this->days.value();
    temp -= lhs.value();
 
-   if(temp<1){
+   while(temp<1){
 
       unsigned int month = this->months.value();
       month--;
@@ -226,12 +227,10 @@ MyDate::Date& MyDate::Date::operator-= (const Months& lhs){
    unsigned int month = this->months.value();
    month -= lhs.value();
 
-   if(month < 1){
-       month = 12;
-       unsigned int year = this->years.value();
-       year--;
 
-       this->years.setYears(year);
+   while(month > 12){
+       month -= 12;
+       this->years.setYears(this->years-1);
 
    }
 
@@ -280,3 +279,63 @@ std::ostream& operator<<(std::ostream &lhs,const MyDate::Date &rhs){
 }
 
 
+/**
+*  Methode addiert die gegebenen Tage auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
+MyDate::Date& MyDate::Date::operator+ (const Days& rhs)const{
+
+    MyDate::Date lhs(this->day(),this->month(),this->year());
+    lhs += rhs;
+    return lhs;
+}
+
+/**
+*  Methode dividiert die gegebenen Tage auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
+MyDate::Date& MyDate::Date::operator- (const Days& rhs)const{
+
+    MyDate::Date lhs(this->day(),this->month(),this->year());
+    lhs -= rhs;
+    return lhs;
+}
+
+/**
+*  Methode addiert die gegebenen Monate auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
+MyDate::Date& MyDate::Date::operator+ (const Months& rhs)const{
+
+    MyDate::Date lhs(this->day(),this->month(),this->year());
+    lhs += rhs;
+    return lhs;
+}
+
+/**
+*  Methode dividiert die gegebenen Monate auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
+MyDate::Date& MyDate::Date::operator- (const Months& rhs)const{
+
+    MyDate::Date lhs(this->day(),this->month(),this->year());
+    lhs -= rhs;
+    return lhs;
+}
+
+
+/**
+*  Methode addiert die gegebenen Jahre auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
+MyDate::Date& MyDate::Date::operator+ (const Years& rhs)const{
+
+    MyDate::Date lhs(this->day(),this->month(),this->year());
+    lhs += rhs;
+    return lhs;
+}
+
+/**
+*  Methode dividiert die gegebenen Jahre auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
+MyDate::Date& MyDate::Date::operator- (const Years& rhs)const{
+
+    MyDate::Date lhs(this->day(),this->month(),this->year());
+    lhs -= rhs;
+    return lhs;
+}

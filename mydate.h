@@ -155,6 +155,18 @@ Date& operator+= (const unsigned int& lhs);
 Date& operator-= (const unsigned int& lhs);
 
 
+Date& operator+ (const Days& lhs)const;
+
+Date& operator+ (const Months& lhs)const;
+
+Date& operator+ (const Years& lhs)const;
+
+Date& operator- (const Days& lhs)const;
+
+Date& operator- (const Months& lhs)const;
+
+Date& operator- (const Years& lhs)const;
+
 
 
 };
