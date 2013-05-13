@@ -37,7 +37,7 @@ int main()
         assert(x.daysInMonth(Months(2),Years(2012)).value()==29);
     }
 
-#if 0
+
     {
         // static member function Date::daysInMonth()
         int days_feb = Date::daysInMonth(2);
@@ -102,7 +102,7 @@ int main()
         int evenmoredays = 480;
         d3 += Days(evenmoredays);
         cout << "Date3 +" << evenmoredays << "d: " << d3 << endl;
-        assert(d3.year() == 2015);
+        assert(d3.year() == 2014);
 
         // does += return the correct return type and value?
         Date x(1,1,2012);
@@ -111,7 +111,7 @@ int main()
         assert(x == Date(5,1,2012));
 
     }
-
+#if 0
 
     {
         Date d3(1,1,2015);

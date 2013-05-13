@@ -88,8 +88,9 @@ public:
     Months month() const;
     Years year() const;
 
-    static bool isLeapYear(Years y);
-    static Days daysInMonth(Months m, Years y);
+    static bool isLeapYear(unsigned int y);
+    static Days daysInMonth(Months m = 0, Years y = 0);
+
 
     /**
      * Gibt zurück ob die zwei Datums identisch sind
@@ -137,21 +138,21 @@ public:
 
     }
 
-Date* operator+= (const Days& lhs);
+Date& operator+= (const Days& lhs);
 
-Date* operator+= (const Months& lhs);
+Date& operator+= (const Months& lhs);
 
-Date* operator+= (const Years& lhs);
+Date& operator+= (const Years& lhs);
 
-Date* operator-= (const Days& lhs);
+Date& operator-= (const Days& lhs);
 
-Date* operator-= (const Months& lhs);
+Date& operator-= (const Months& lhs);
 
-Date* operator-= (const Years& lhs);
+Date& operator-= (const Years& lhs);
 
-Date* operator+= (const unsigned int& lhs);
+Date& operator+= (const unsigned int& lhs);
 
-Date* operator-= (const unsigned int& lhs);
+Date& operator-= (const unsigned int& lhs);
 
 
 
@@ -160,11 +161,9 @@ Date* operator-= (const unsigned int& lhs);
 
 }
 
-/**
-std::ostream& operator<<(std::ostream &lhs,const MyDate::Date &rhs){
-    lhs << rhs.day().value() << "." << rhs.month().value() << "." << rhs.year().value();
-    return lhs;
-}
-*/
+
+std::ostream& operator<<(std::ostream &lhs,const MyDate::Date &rhs);
+
+
 
 #endif // MYDATE_H
