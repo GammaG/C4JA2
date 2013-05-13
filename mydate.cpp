@@ -95,7 +95,9 @@ MyDate::Days MyDate::Date::daysInMonth(Months m, Years y){
 
 }
 
-
+/**
+*  Methode addiert die gegebenen Tage auf das Datum, zählt wenn notwendig Jahr & Monat hoch
+*/
 MyDate::Date* MyDate::Date::operator+= (const Days& lhs){
    unsigned int temp = this->days.value();
    temp += lhs.value();
@@ -119,7 +121,10 @@ MyDate::Date* MyDate::Date::operator+= (const Days& lhs){
 
 }
 
-
+/**
+* Methode addiert einen Monat auf das Datum, zählt wenn notwendig das Jahr hoch
+* & setzt die Tage auf das Maximum des aktuellen Monates
+*/
 MyDate::Date* MyDate::Date::operator+= (const Months& lhs){
    unsigned int month = this->months.value();
    month += lhs.value();
@@ -149,6 +154,9 @@ MyDate::Date* MyDate::Date::operator+= (const Months& lhs){
 }
 
 
+/**
+* Addiert gegebene Jahre auf das Datum
+*/
 MyDate::Date* MyDate::Date::operator+= (const Years& lhs){
    unsigned int temp = this->years.value();
    temp += lhs.value();
@@ -159,10 +167,97 @@ MyDate::Date* MyDate::Date::operator+= (const Years& lhs){
 }
 
 
-
+/**
+* Fehlerbehandlung wenn kein spezieller Typ übergeben wird, gibt das unveränderte Datum zurück
+*/
 MyDate::Date* MyDate::Date::operator+= (const unsigned int& lhs){
    return this;
 
 }
+
+
+/**
+*  Methode subtrahiert die gegebenen Tage von dem Datum,
+*  zählt wenn notwendig Jahr & Monat runter
+*/
+MyDate::Date* MyDate::Date::operator-= (const Days& lhs){
+   unsigned int temp = this->days.value();
+   temp -= lhs.value();
+
+   if(temp<1){
+
+      unsigned int month = this->months.value();
+      month--;
+      if(month < 1){
+          unsigned int year = this->years.value();
+          year--;
+          month = 12;
+            this->years.setYears(year);
+      }
+
+      this->months.setMonths(month);
+      temp = daysInMonth(this->months,this->years).value() - temp;
+   }
+
+   this->days.setDays(temp);
+    return this;
+
+}
+
+/**
+* Methode subtrahiert einen Monat von dem Datum, zählt wenn notwendig das Jahr runter
+* & setzt die Tage auf das Maximum des aktuellen Monates
+*/
+MyDate::Date* MyDate::Date::operator-= (const Months& lhs){
+   unsigned int month = this->months.value();
+   month -= lhs.value();
+
+   if(month < 1){
+       month = 12;
+       unsigned int year = this->years.value();
+       year--;
+
+       this->years.setYears(year);
+
+   }
+
+
+   this->months.setMonths(month);
+
+   //hier wird die Anzahl der Tage auf der Max des aktuellen Monates gesetzt.
+   if(daysInMonth(this->months,this->years).value() < this->days.value()){
+
+       this->days.setDays(daysInMonth(this->months,this->years).value());
+
+   }
+
+   return this;
+
+
+}
+
+
+/**
+* Subtrahiert gegebene Jahre von dem Datum
+*/
+MyDate::Date* MyDate::Date::operator-= (const Years& lhs){
+   unsigned int temp = this->years.value();
+   temp -= lhs.value();
+
+   this->years.setYears(temp);
+
+
+}
+
+
+
+/**
+* Fehlerbehandlung wenn kein spezieller Typ übergeben wird, gibt das unveränderte Datum zurück
+*/
+MyDate::Date* MyDate::Date::operator-= (const unsigned int& lhs){
+   return this;
+
+}
+
 
 

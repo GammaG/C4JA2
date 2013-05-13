@@ -143,7 +143,15 @@ Date* operator+= (const Months& lhs);
 
 Date* operator+= (const Years& lhs);
 
+Date* operator-= (const Days& lhs);
+
+Date* operator-= (const Months& lhs);
+
+Date* operator-= (const Years& lhs);
+
 Date* operator+= (const unsigned int& lhs);
+
+Date* operator-= (const unsigned int& lhs);
 
 
 
