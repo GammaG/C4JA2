@@ -6,7 +6,6 @@
 using namespace MyDate;
 
 class Map{
-
 public:
     typedef MyDate::Date key_t;
     typedef std::string mapped_t;
@@ -16,15 +15,43 @@ protected:
 
     public:
         std::pair<key_t,mapped_t> m_pair; // key/value
-        Node* m_up, *m_left, *m_right; //pointers to other nodes
+        Node *m_up, *m_left, *m_right; //pointers to other nodes
 
-    };
+        explicit Node(const key_t key, const mapped_t mapped):
+            m_pair(key,mapped), m_up(0), m_left(0), m_right(0) {}
 
+
+
+        void setUpNode(Node* x);
+        void setLeftNode(Node* x);
+        void setRightNode(Node* x);
+        Node* getUpNode();
+        Node* getLeftNode();
+        Node* getRightNode();
+        void setMessage(mapped_t str);
+
+
+        Node* createNewNode(const key_t& key, const mapped_t mapped, Node* upNode);
+
+
+
+
+        };
+
+public:
     Node* m_root; //root node of the search tree
     size_t m_size; // number of elements in tree
     const mapped_t M_NOT_IN_MAP;  //return val if not in map
 
+    Map():m_root(0){}
+
     size_t getSize() const;
+
+    Node* getRootNode();
+
+    mapped_t& operator[](const key_t& key);
+
+
 };
 
 
