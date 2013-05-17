@@ -22,7 +22,7 @@ protected:
 
 
 
-        void setUpNode(Node* x);
+        void setUpNode(Node& x);
         void setLeftNode(Node* x);
         void setRightNode(Node* x);
         Node* getUpNode();
@@ -31,7 +31,7 @@ protected:
         void setMessage(mapped_t str);
 
 
-        Node* createNewNode(const key_t& key, const mapped_t mapped, Node* upNode);
+        Node* insert(const key_t& key, const mapped_t mapped, Node& upNode);
 
 
 
@@ -42,14 +42,19 @@ public:
     Node* m_root; //root node of the search tree
     size_t m_size; // number of elements in tree
     const mapped_t M_NOT_IN_MAP;  //return val if not in map
+    int counter;
 
-    Map():m_root(0){}
+    Map():m_root(0),counter(0){}
 
     size_t getSize() const;
 
     Node* getRootNode();
 
+    bool contains(Node& last, const key_t& key);
+
     mapped_t& operator[](const key_t& key);
+
+    Node& find(Node& last ,const key_t& key);
 
 
 };

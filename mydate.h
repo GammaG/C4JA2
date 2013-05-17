@@ -119,23 +119,6 @@ public:
 
     }
 
-    /**
-    * Gibt zurück ob das erste datum kleiner ist als das Zweite.
-    */
-    friend bool operator< (const Date& lhs,const Date& rhs){
-
-        if(lhs.years.value()<rhs.years.value()){
-            return true;
-        } else if(lhs.months.value()<rhs.months.value()){
-            return true;
-        } else if(lhs.days.value()<rhs.days.value()){
-            return true;
-        }
-
-
-    return false;
-
-    }
 
 Date& operator+= (const Days& lhs);
 
@@ -166,7 +149,9 @@ Date& operator- (const Months& lhs)const;
 
 Date& operator- (const Years& lhs)const;
 
+bool operator<(const Date& rhs);
 
+std::string& toString();
 
 };
 

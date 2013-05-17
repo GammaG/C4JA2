@@ -3,6 +3,7 @@
 
 using namespace MyDate;
 
+
 size_t Map::getSize() const{
 
     return m_size;
@@ -19,22 +20,63 @@ void Map::Node::setMessage(Map::mapped_t str){
 }
 
  Map::mapped_t& Map::operator[](const Map::key_t& key){
+
      if(this->getRootNode()==0){
-         Map::Node(key,"1");
+         Map::Node(key,""+this->counter++);
          this->m_size++;
-    //     return this->M_NOT_IN_MAP;
+        //return this->M_NOT_IN_MAP;
+      }
+        else{
+         return find(*this->getRootNode(),key);
      }
 
 
 
+   // return this->M_NOT_IN_MAP;
+ }
+
+ Map::Node& Map::find(Map::Node& last,const Map::key_t& key){
+     if(last.m_pair.first==key){
+         return last;
+     }
+     else if(last.m_pair.first<key){
+         if(last.getRightNode()==0){
+             last.setRightNode(last.insert(key, ""+this->counter++,last));
+
+         }  else{
+            return Map::find(*last.getRightNode(),key);
+            }
+     } else {
+         if(last.getLeftNode()==0){
+             last.setLeftNode(last.insert(key, ""+this->counter++,last));
+         }
+         return find(*last.getLeftNode(),key);
+     }
 
 
-
-    // return this->M_NOT_IN_MAP;
  }
 
 
- Map::Node* Map::Node::createNewNode(const Map::key_t& key, const Map::mapped_t mapped, Map::Node* upNode){
+ bool Map::contains(Map::Node& last, const Map::key_t& key){
+     if(last.m_pair.first==key){
+         return true;
+     } else if(last.m_pair.first<key){
+         if(last.getRightNode()==0){
+             return false;
+         }
+         return contains(*last.getRightNode(),key);
+     } else {
+         if(last.getLeftNode()==0){
+             return false;
+         }
+         return contains(*last.getLeftNode(),key);
+     }
+     return false;
+
+ }
+
+
+ Map::Node* Map::Node::insert(const Map::key_t& key, const Map::mapped_t mapped, Map::Node& upNode){
 
      Map::Node node(key,mapped);
      node.setUpNode(upNode);
@@ -42,7 +84,7 @@ void Map::Node::setMessage(Map::mapped_t str){
 }
 
 
- void Map::Node::setUpNode(Node* x){
+ void Map::Node::setUpNode(Node& x){
     this->m_up = x;
 }
 

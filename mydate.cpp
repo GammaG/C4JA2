@@ -339,3 +339,31 @@ MyDate::Date& MyDate::Date::operator- (const Years& rhs)const{
     lhs -= rhs;
     return lhs;
 }
+
+std::string& MyDate::Date::toString(){
+    std::string temp = "";
+    temp += this->days;
+    temp += ".";
+    temp += this->months;
+    temp += ".";
+    temp += this->years;
+
+    return temp;
+}
+
+/**
+ * Gibt zurück ob das übergebene Datum größer als das aktuelle ist.
+ * @brief operator <
+ * @param rhs
+ * @return
+ */
+bool MyDate::Date::operator<(const MyDate::Date& rhs){
+    if(this->years<rhs.years){
+        return true;
+    } else if(this->months<rhs.months){
+        return true;
+    } else if(this->days<rhs.days){
+        return true;
+    }
+    return false;
+}
