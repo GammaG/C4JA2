@@ -22,17 +22,17 @@ void Map::Node::setMessage(Map::mapped_t str){
  Map::mapped_t& Map::operator[](const Map::key_t& key){
 
      if(this->getRootNode()==0){
-         Map::Node(key,""+this->counter++);
+         Map::Node(key,""+this->counter++,0);
          this->m_size++;
-        //return this->M_NOT_IN_MAP;
+
       }
         else{
-         return find(*this->getRootNode(),key);
+         return find(&this->getRootNode(),key);
      }
 
 
 
-   // return this->M_NOT_IN_MAP;
+
  }
 
  Map::Node& Map::find(Map::Node& last,const Map::key_t& key){
@@ -41,18 +41,45 @@ void Map::Node::setMessage(Map::mapped_t str){
      }
      else if(last.m_pair.first<key){
          if(last.getRightNode()==0){
-             last.setRightNode(last.insert(key, ""+this->counter++,last));
+             last.setRightNode(*last.insert(key, ""+this->counter++,last));
 
          }  else{
             return Map::find(*last.getRightNode(),key);
             }
      } else {
          if(last.getLeftNode()==0){
-             last.setLeftNode(last.insert(key, ""+this->counter++,last));
+             last.setLeftNode(*last.insert(key, ""+this->counter++,last));
          }
          return find(*last.getLeftNode(),key);
      }
 
+
+ }
+
+
+ const Map::mapped_t& Map::findReadOnly(Map::Node& last,const Map::key_t& key){
+     if(last.m_pair.first==key){
+         return last.m_pair.second;
+     }
+     else if(last.m_pair.first<key){
+         if(last.getRightNode()==0){
+            return Map::M_NOT_IN_MAP;
+
+         }  else{
+            return Map::findReadOnly(*last.getRightNode(),key);
+            }
+     } else {
+         if(last.getLeftNode()==0){
+             return Map::M_NOT_IN_MAP;
+         }
+         return findReadOnly(*last.getLeftNode(),key);
+     }
+
+
+ }
+
+ const Map::mapped_t& Map::operator[](const key_t key) const{
+     return findReadOnly(*this->getRootNode(),key);
 
  }
 
@@ -78,22 +105,22 @@ void Map::Node::setMessage(Map::mapped_t str){
 
  Map::Node* Map::Node::insert(const Map::key_t& key, const Map::mapped_t mapped, Map::Node& upNode){
 
-     Map::Node node(key,mapped);
-     node.setUpNode(upNode);
-     return &node;
+    Map::Node *n = new Map::Node(key,mapped,&upNode);
+
+     return n;
 }
 
 
  void Map::Node::setUpNode(Node& x){
-    this->m_up = x;
+    this->m_up = &x;
 }
 
-void Map::Node::setLeftNode(Node* x){
-    this->m_left = x;
+void Map::Node::setLeftNode(Node& x){
+    this->m_left = &x;
 }
 
-void Map::Node::setRightNode(Node* x){
-    this->m_right = x;
+void Map::Node::setRightNode(Node& x){
+    this->m_right = &x;
 }
 
 Map::Node* Map::Node::getUpNode(){

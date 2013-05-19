@@ -17,14 +17,14 @@ protected:
         std::pair<key_t,mapped_t> m_pair; // key/value
         Node *m_up, *m_left, *m_right; //pointers to other nodes
 
-        explicit Node(const key_t key, const mapped_t mapped):
-            m_pair(key,mapped), m_up(0), m_left(0), m_right(0) {}
+        explicit Node(const key_t key, const mapped_t mapped, Node* parent):
+            m_pair(key,mapped), m_up(parent), m_left(0), m_right(0) {}
 
 
 
         void setUpNode(Node& x);
-        void setLeftNode(Node* x);
-        void setRightNode(Node* x);
+        void setLeftNode(Node& x);
+        void setRightNode(Node& x);
         Node* getUpNode();
         Node* getLeftNode();
         Node* getRightNode();
@@ -54,10 +54,19 @@ public:
 
     mapped_t& operator[](const key_t& key);
 
+    const mapped_t& operator[](const key_t key) const;
+
     Node& find(Node& last ,const key_t& key);
+    const mapped_t& findReadOnly(Node& last,const key_t& key);
+
+
+    ~Map() {
+        delete[](m_root);
+
+
+    }
 
 
 };
-
 
 #endif // MYDATE_MAP_H
