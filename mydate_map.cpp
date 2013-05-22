@@ -27,7 +27,7 @@ void Map::Node::setMessage(Map::mapped_t str){
 
       }
         else{
-         return find(&this->getRootNode(),key);
+         return find(*m_root,key).m_pair.second;
      }
 
 
@@ -37,11 +37,13 @@ void Map::Node::setMessage(Map::mapped_t str){
 
  Map::Node& Map::find(Map::Node& last,const Map::key_t& key){
      if(last.m_pair.first==key){
+         last.setMessage(""+this->counter++);
          return last;
      }
      else if(last.m_pair.first<key){
          if(last.getRightNode()==0){
              last.setRightNode(*last.insert(key, ""+this->counter++,last));
+             m_size++;
 
          }  else{
             return Map::find(*last.getRightNode(),key);
@@ -49,6 +51,7 @@ void Map::Node::setMessage(Map::mapped_t str){
      } else {
          if(last.getLeftNode()==0){
              last.setLeftNode(*last.insert(key, ""+this->counter++,last));
+             m_size++;
          }
          return find(*last.getLeftNode(),key);
      }
@@ -57,7 +60,7 @@ void Map::Node::setMessage(Map::mapped_t str){
  }
 
 
- const Map::mapped_t& Map::findReadOnly(Map::Node& last,const Map::key_t& key){
+ const Map::mapped_t& Map::findReadOnly(Map::Node& last,const Map::key_t& key)const {
      if(last.m_pair.first==key){
          return last.m_pair.second;
      }
@@ -79,7 +82,7 @@ void Map::Node::setMessage(Map::mapped_t str){
  }
 
  const Map::mapped_t& Map::operator[](const key_t key) const{
-     return findReadOnly(*this->getRootNode(),key);
+     return findReadOnly(*m_root,key);
 
  }
 
@@ -107,7 +110,7 @@ void Map::Node::setMessage(Map::mapped_t str){
 
     Map::Node *n = new Map::Node(key,mapped,&upNode);
 
-     return n;
+    return n;
 }
 
 

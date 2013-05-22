@@ -56,8 +56,10 @@ public:
 
     const mapped_t& operator[](const key_t key) const;
 
-    Node& find(Node& last ,const key_t& key);
-    const mapped_t& findReadOnly(Node& last,const key_t& key);
+    Node& find(Node& last , const key_t& key);
+    const mapped_t& findReadOnly(Node& last, const key_t& key)const;
+
+
 
 
     ~Map() {
