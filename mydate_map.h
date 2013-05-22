@@ -21,6 +21,9 @@ protected:
             m_pair(key,mapped), m_up(parent), m_left(0), m_right(0) {}
 
 
+        explicit Node(Node* clone):
+            m_pair(clone->m_pair.first,clone->m_pair.second), m_up(clone->getUpNode()), m_left(clone->getLeftNode()), m_right(clone->getRightNode()) {}
+
 
         void setUpNode(Node& x);
         void setLeftNode(Node& x);
@@ -29,11 +32,17 @@ protected:
         Node* getLeftNode();
         Node* getRightNode();
         void setMessage(mapped_t str);
+        Node& clone(Node* clone);
+
+        Node& operator= (const Node& rhs);
 
 
         Node* insert(const key_t& key, const mapped_t mapped, Node& upNode);
 
-
+        ~Node(){
+            delete(m_left);
+            delete(m_right);
+        }
 
 
         };
@@ -61,10 +70,8 @@ public:
 
 
 
-
     ~Map() {
-        delete[](m_root);
-
+        delete(m_root);
 
     }
 

@@ -10,6 +10,12 @@ size_t Map::getSize() const{
 
 }
 
+Map::Node& clone(Map::Node& clone){
+    Map::Node n = clone;
+
+    return n;
+}
+
 Map::Node* Map::getRootNode(){
      return Map::m_root;
  }
@@ -34,6 +40,12 @@ void Map::Node::setMessage(Map::mapped_t str){
 
 
  }
+
+ Map::Node& operator= (const Map::Node& rhs){
+
+
+ }
+
 
  Map::Node& Map::find(Map::Node& last,const Map::key_t& key){
      if(last.m_pair.first==key){
