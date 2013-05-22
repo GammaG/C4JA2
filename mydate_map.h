@@ -10,7 +10,7 @@ public:
     typedef MyDate::Date key_t;
     typedef std::string mapped_t;
 
-protected:
+
     class Node{
 
     public:
@@ -32,9 +32,9 @@ protected:
         Node* getLeftNode();
         Node* getRightNode();
         void setMessage(mapped_t str);
-        Node& clone(Node* clone);
+        Node* clone(Node* clone);
 
-        Node& operator= (const Node& rhs);
+
 
 
         Node* insert(const key_t& key, const mapped_t mapped, Node& upNode);
@@ -47,7 +47,7 @@ protected:
 
         };
 
-public:
+
     Node* m_root; //root node of the search tree
     size_t m_size; // number of elements in tree
     const mapped_t M_NOT_IN_MAP;  //return val if not in map
@@ -68,7 +68,7 @@ public:
     Node& find(Node& last , const key_t& key);
     const mapped_t& findReadOnly(Node& last, const key_t& key)const;
 
-
+    void operator= (Map& map);
 
     ~Map() {
         delete(m_root);

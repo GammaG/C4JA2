@@ -10,11 +10,28 @@ size_t Map::getSize() const{
 
 }
 
-Map::Node& clone(Map::Node& clone){
-    Map::Node n = clone;
+Map::Node* Map::Node::clone(Map::Node* parent){
+    Map::Node* n = new Map::Node(m_pair.first,m_pair.second,parent);
 
-    return n;
+    if(m_left != 0){
+        n->m_left = m_left->clone(n);
+
+    } else{
+        n->m_left = 0;
+    }
+
+    if(m_right != 0){
+        n->m_right = m_right->clone(n);
+
+    } else{
+        n->m_right = 0;
+    }
+
+return n;
 }
+
+
+
 
 Map::Node* Map::getRootNode(){
      return Map::m_root;
@@ -28,7 +45,8 @@ void Map::Node::setMessage(Map::mapped_t str){
  Map::mapped_t& Map::operator[](const Map::key_t& key){
 
      if(this->getRootNode()==0){
-         Map::Node(key,""+this->counter++,0);
+        m_root = new Map::Node(key,""+this->counter++,0);
+
          this->m_size++;
 
       }
@@ -37,12 +55,13 @@ void Map::Node::setMessage(Map::mapped_t str){
      }
 
 
-
-
  }
 
- Map::Node& operator= (const Map::Node& rhs){
-
+ void Map::operator= (Map& rhs){
+     Map();
+     this->m_root = rhs.m_root->clone(0);
+     this->counter = rhs.counter;
+     this->m_size = rhs.m_size;
 
  }
 
@@ -97,6 +116,7 @@ void Map::Node::setMessage(Map::mapped_t str){
      return findReadOnly(*m_root,key);
 
  }
+
 
 
  bool Map::contains(Map::Node& last, const Map::key_t& key){
