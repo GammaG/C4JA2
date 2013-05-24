@@ -31,7 +31,6 @@ public:
         Node* getUpNode();
         Node* getLeftNode();
         Node* getRightNode();
-        void setMessage(mapped_t str);
         Node* clone(Node* clone);
 
 
@@ -58,6 +57,10 @@ public:
     size_t getSize() const;
 
     Node* getRootNode();
+
+    void setMessage(key_t key ,mapped_t str);
+    void setMessage(key_t key ,int nr);
+
 
     bool contains(Node& last, const key_t& key);
 

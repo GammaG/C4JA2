@@ -32,22 +32,42 @@ return n;
 }
 
 
+std::string convertInt(int number)
+{
+    if (number == 0)
+        return "0";
+    std::string temp="";
+    std::string returnvalue="";
+    while (number>0)
+    {
+        temp+=number%10+48;
+        number/=10;
+    }
+    for (int i=0;i<temp.length();i++)
+        returnvalue+=temp[temp.length()-i-1];
+    return returnvalue;
+}
 
 
 Map::Node* Map::getRootNode(){
      return Map::m_root;
  }
 
-void Map::Node::setMessage(Map::mapped_t str){
-    this->m_pair.second = str;
+void Map::setMessage(Map::key_t key ,int nr){
+    Node& n = find(*m_root,key);
+    n.m_pair.second = convertInt(nr);
+}
 
+void Map::setMessage(Map::key_t key ,Map::mapped_t str){
+    Node& n = find(*m_root,key);
+    n.m_pair.second = str;
 }
 
  Map::mapped_t& Map::operator[](const Map::key_t& key){
 
      if(this->getRootNode()==0){
 
-         m_root = new Map::Node(key, ""+ increaseCounter(),0);
+         m_root = new Map::Node(key, convertInt(increaseCounter()),0);
 
          this->m_size++;
 
@@ -60,7 +80,6 @@ void Map::Node::setMessage(Map::mapped_t str){
  }
 
   int Map::increaseCounter(){
-
     counter++;
     return counter;
 
@@ -79,12 +98,12 @@ void Map::Node::setMessage(Map::mapped_t str){
 
  Map::Node& Map::find(Map::Node& last,const Map::key_t& key){
      if(last.m_pair.first==key){
-         last.setMessage(""+increaseCounter());
+         //last.setMessage(convertInt(increaseCounter()));
          return last;
      }
      else if(last.m_pair.first<key){
          if(last.getRightNode()==0){
-             last.setRightNode(*last.insert(key, ""+increaseCounter(),last));
+             last.setRightNode(*last.insert(key, convertInt(increaseCounter()),last));
              m_size++;
              return *last.getRightNode();
 
@@ -93,7 +112,7 @@ void Map::Node::setMessage(Map::mapped_t str){
             }
      } else {
          if(last.getLeftNode()==0){
-             last.setLeftNode(*last.insert(key, ""+increaseCounter(),last));
+             last.setLeftNode(*last.insert(key, convertInt(increaseCounter()),last));
              m_size++;
              return *last.getLeftNode();
          }

@@ -180,19 +180,37 @@ int main()
 
         Map m;
 
-        m.operator [](d1);
-        cout << m.operator [](d1) << endl;
-        m.operator [](d3);
-        m.operator [](d4);
-        m.operator [](d5);
-        m.operator [](d6);
-        m.operator [](d7);
-        cout << m.operator [](d5) << endl;
+        m[d1];
+        cout << "Should be 1 is: "  << m[d1] << endl;
+        m[d2];
+        m[d3];
+        m[d4];
+        m[d5];
+        m[d6];
+        m[d7];
+        cout << "Should be 5 is: "  << m[d5] << endl;
+
+        cout << "Change message of " << d2 << " to 19" << endl;
+        m.setMessage(d2,19);
+        cout << "Should be 19 is: " << m[d2] << endl;
+
+        cout << "Map clone to const Map begins" << endl;
+        const Map mc = m;
+
+        const Date dc1(13,2,2012);
+        const Date dc2(25,3,2000);
+        cout << "New Dates are:" << endl;
+        cout << dc1 << endl;
+        cout << dc2 << endl;
+
+        cout << "Should be 4 is: "  << mc[dc1] << endl;
+        cout << "Should be not in List" << mc[dc2] << endl;
 
     }
 
 
     cout << "all tests completed." << endl;
+    cout << "Cya, I'm done here" << endl;
 
     return 0;
 }
