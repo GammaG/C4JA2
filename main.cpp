@@ -9,6 +9,7 @@
 #include <iostream>
 #include <assert.h>
 #include "mydate.h"
+#include "mydate_map.h"
 
 using namespace std;
 using namespace MyDate;
@@ -153,6 +154,40 @@ int main()
         Date dd5 = dd + Days(2) + Months(3) + Years(5);
         cout << dd << " + 2d + 3m + 5y = " << dd5 << endl;
         assert(dd5 == Date(2,4,2018));
+
+    }
+
+
+    {
+        cout << "From here on 2.2" << endl;
+
+        Date d1(27,5,2013);
+        Date d2(27,6,2013);
+        Date d3(6,7,2014);
+        Date d4(13,2,2012);
+        Date d5(1,1,2000);
+        Date d6(13,3,2012);
+        Date d7(29,5,2013);
+
+        cout << "The Dates:" << endl;
+        cout << d1 << endl;
+        cout << d2 << endl;
+        cout << d3 << endl;
+        cout << d4 << endl;
+        cout << d5 << endl;
+        cout << d6 << endl;
+        cout << d7 << endl;
+
+        Map m;
+
+        m.operator [](d1);
+        cout << m.operator [](d1) << endl;
+        m.operator [](d3);
+        m.operator [](d4);
+        m.operator [](d5);
+        m.operator [](d6);
+        m.operator [](d7);
+        cout << m.operator [](d5) << endl;
 
     }
 

@@ -1,6 +1,7 @@
 #include "mydate.h"
 #include "mydate_map.h"
 
+
 using namespace MyDate;
 
 
@@ -45,7 +46,8 @@ void Map::Node::setMessage(Map::mapped_t str){
  Map::mapped_t& Map::operator[](const Map::key_t& key){
 
      if(this->getRootNode()==0){
-        m_root = new Map::Node(key,""+this->counter++,0);
+
+         m_root = new Map::Node(key, ""+ increaseCounter(),0);
 
          this->m_size++;
 
@@ -57,6 +59,13 @@ void Map::Node::setMessage(Map::mapped_t str){
 
  }
 
+  int Map::increaseCounter(){
+
+    counter++;
+    return counter;
+
+  }
+
  void Map::operator= (Map& rhs){
      Map();
      this->m_root = rhs.m_root->clone(0);
@@ -66,23 +75,27 @@ void Map::Node::setMessage(Map::mapped_t str){
  }
 
 
+
+
  Map::Node& Map::find(Map::Node& last,const Map::key_t& key){
      if(last.m_pair.first==key){
-         last.setMessage(""+this->counter++);
+         last.setMessage(""+increaseCounter());
          return last;
      }
      else if(last.m_pair.first<key){
          if(last.getRightNode()==0){
-             last.setRightNode(*last.insert(key, ""+this->counter++,last));
+             last.setRightNode(*last.insert(key, ""+increaseCounter(),last));
              m_size++;
+             return *last.getRightNode();
 
          }  else{
             return Map::find(*last.getRightNode(),key);
             }
      } else {
          if(last.getLeftNode()==0){
-             last.setLeftNode(*last.insert(key, ""+this->counter++,last));
+             last.setLeftNode(*last.insert(key, ""+increaseCounter(),last));
              m_size++;
+             return *last.getLeftNode();
          }
          return find(*last.getLeftNode(),key);
      }
