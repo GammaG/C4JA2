@@ -2,15 +2,25 @@
 #define MYDATE_MAP_H
 #import "mydate.h"
 
-
+/**
+ * @author Admin
+ * @date 24.05.13
+ */
 using namespace MyDate;
 
+/** Deklarartion der Klasse Map, diese beinhaltet die Klassendefinition der Node,
+ * die Suchfunktionen, sowie den root Node und die Anzahl
+ * @brief The Map class
+ */
 class Map{
 public:
     typedef MyDate::Date key_t;
     typedef std::string mapped_t;
 
 
+    /** Klasse Node behinhaltet ein Wertepaar auf einem Key und einem Wert
+     * @brief The Node class
+     */
     class Node{
 
     public:

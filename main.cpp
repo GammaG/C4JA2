@@ -194,6 +194,8 @@ int main()
         m.setMessage(d2,19);
         cout << "Should be 19 is: " << m[d2] << endl;
 
+        cout << "Map contains " << d3 << ", should be 1 is: " << m.contains(*m.getRootNode(), d3) << endl;
+
         cout << "Map clone to const Map begins" << endl;
         const Map mc = m;
 
