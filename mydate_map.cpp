@@ -108,6 +108,7 @@ void Map::setMessage(Map::key_t key ,Map::mapped_t str){
          m_root = new Map::Node(key, convertInt(increaseCounter()),0);
 
          this->m_size++;
+         return m_root->m_pair.second;
 
       }
         else{

@@ -10,9 +10,9 @@
 #include <assert.h>
 #include "mydate.h"
 #include "mydate_map.h"
+#include "map.h"
 
 using namespace std;
-using namespace MyDate;
 
 int main()
 {
@@ -178,7 +178,7 @@ int main()
         cout << d6 << endl;
         cout << d7 << endl;
 
-        Map m;
+        MyDate::Map m;
 
         m[d1];
         cout << "Should be 1 is: "  << m[d1] << endl;
@@ -197,7 +197,7 @@ int main()
         cout << "Map contains " << d3 << ", should be 1 is: " << m.contains(*m.getRootNode(), d3) << endl;
 
         cout << "Map clone to const Map begins" << endl;
-        const Map mc = m;
+        const MyDate::Map mc = m;
 
         const Date dc1(13,2,2012);
         const Date dc2(25,3,2000);
@@ -208,6 +208,18 @@ int main()
         cout << "Should be 4 is: "  << mc[dc1] << endl;
         cout << "Should be not in List" << mc[dc2] << endl;
 
+    }
+
+    {
+
+        cout << "From here on Nr 2.3" << endl;
+        templateSpace::Map<int,std::string> m;
+        m[0] = "hallo";
+        m[1] = "bla";
+        assert(m[0] == "hallo");
+        assert(m[1] == "bla");
+        cout << "should be hallo is " << m[0] << endl;
+        cout << "should be bla is " << m[1] << endl;
     }
 
 

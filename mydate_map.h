@@ -7,6 +7,8 @@
  * @date 24.05.13
  */
 using namespace MyDate;
+namespace MyDate {
+
 
 /** Deklarartion der Klasse Map, diese beinhaltet die Klassendefinition der Node,
  * die Suchfunktionen, sowie den root Node und die Anzahl
@@ -49,9 +51,13 @@ public:
         Node* insert(const key_t& key, const mapped_t mapped, Node& upNode);
 
         ~Node(){
+
+            if(m_left != 0){
             delete(m_left);
+            }
+            if(m_left != 0){
             delete(m_right);
-        }
+            } }
 
 
         };
@@ -62,7 +68,7 @@ public:
     const mapped_t M_NOT_IN_MAP;  //return val if not in map
     int counter;
 
-    Map():m_root(0),counter(0){}
+    Map():m_root(0),counter(0),m_size(0){}
 
     size_t getSize() const;
 
@@ -86,11 +92,14 @@ public:
     void operator= (Map& map);
 
     ~Map() {
+        if(m_root != 0){
         delete(m_root);
+        }
 
     }
 
 
 };
+}
 
 #endif // MYDATE_MAP_H
