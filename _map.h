@@ -82,7 +82,7 @@ void Map<KeyT,T>::setMessage(Map<KeyT,T>::key_t key ,Map<KeyT,T>::mapped_t str){
 
 template<class KeyT, class T>
 typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findFirst() {
-    if (m_left != NULL) {
+    if (m_left != 0) {
         return m_left->findFirst();
     } else {
         return this;
@@ -91,7 +91,7 @@ typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findFirst() {
 
 template<class KeyT, class T>
 typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findLast() {
-    if (m_right != NULL) {
+    if (m_right != 0) {
         return m_right->findLast();
     } else {
         return this;
@@ -137,13 +137,13 @@ template<class KeyT, class T>
 
   template<class KeyT, class T>
   typename Map<KeyT,T>::Iterator Map<KeyT,T>::end() {
-          return Map<KeyT,T>::Iterator(0);
+          return Map<KeyT,T>::Iterator();
       }
 
 
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator Map<KeyT,T>::begin() {
-          if (m_root == 0) return end();
+          if (m_root == 0) return Map<KeyT,T>::end();
           return Map<KeyT,T>::Iterator(m_root->findFirst());
       }
 
@@ -151,7 +151,7 @@ typename Map<KeyT,T>::Iterator Map<KeyT,T>::begin() {
 
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator Map<KeyT,T>::beginFromLast() {
-          if (m_root == 0) return end();
+          if (m_root == 0) return Map<KeyT,T>::end();
           return Map<KeyT,T>::Iterator(m_root->findLast());
       }
 
@@ -398,8 +398,8 @@ typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::getRightNode(){
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
         Map<KeyT,T>::key_t currentKey = key();
-        Map<KeyT,T>::Node* up = m_root->up();
-        Map<KeyT,T>::Node* right = m_root->right();
+        Map<KeyT,T>::Node* up = m_root->getUpNode();
+        Map<KeyT,T>::Node* right = m_root->getRightNode();
         if (right != 0 && up != 0) {
             if (up->key() > currentKey) {
                 if (up->key() < right->key()) {
@@ -409,7 +409,7 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
                     bool reachedTheBottom = false;
                     Map<KeyT,T>::Node* currentNode = m_root;
                     while (!reachedTheBottom) {
-                        currentNode = currentNode->left();
+                        currentNode = currentNode->getLeftNode();
                         if (currentNode != 0) {
                             if (currentNode->key() < m_root->key()) {
                                 m_root = currentNode;
@@ -424,7 +424,7 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
                 bool reachedTheBottom = false;
                 Map<KeyT,T>::Node* currentNode = m_root;
                 while (!reachedTheBottom) {
-                    currentNode = currentNode->left();
+                    currentNode = currentNode->getLeftNode();
                     if (currentNode != 0) {
                         if (currentNode->key() < m_root->key()) {
                             m_root = currentNode;
@@ -442,7 +442,7 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
                 bool reachedTheTop = false;
                  Map<KeyT,T>::Node* currentNode = m_root;
                 while (!reachedTheTop) {
-                    currentNode = currentNode->up();
+                    currentNode = currentNode->getUpNode();
                     if (currentNode != 0) {
                         if (currentNode->key() > currentKey) {
                             m_root = currentNode;
@@ -460,7 +460,7 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
             bool reachedTheBottom = false;
           Map<KeyT,T>::Node* currentNode = m_root;
             while (!reachedTheBottom) {
-                currentNode = currentNode->left();
+                currentNode = currentNode->getLeftNode();
                 if (currentNode != 0) {
                     if (currentNode->key() <  m_root->key()) {
                         m_root = currentNode;
@@ -476,9 +476,9 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
 
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
-         Map<KeyT,T>::mapped_t currentKey = key();
-         Map<KeyT,T>::Node* up = m_root->up();
-         Map<KeyT,T>::Node* left = m_root->left();
+         Map<KeyT,T>::key_t currentKey = key();
+         Map<KeyT,T>::Node* up = m_root->getUpNode();
+         Map<KeyT,T>::Node* left = m_root->getLeftNode();
         if (left != 0 && up != 0) {
             if (up->key() < currentKey) {
                 if (up->key() > left->key()) {
@@ -488,7 +488,7 @@ typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
                     bool reachedTheBottom = false;
                     Map<KeyT,T>::Node* currentNode = m_root;
                     while (!reachedTheBottom) {
-                        currentNode = currentNode->right();
+                        currentNode = currentNode->getRightNode();
                         if (currentNode != 0) {
                             if (currentNode->key() > m_root->key()) {
                                 m_root = currentNode;
@@ -503,7 +503,7 @@ typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
                 bool reachedTheBottom = false;
                 Map<KeyT,T>::Node* currentNode = m_root;
                 while (!reachedTheBottom) {
-                    currentNode = currentNode->right();
+                    currentNode = currentNode->getRightNode();
                     if (currentNode != 0) {
                         if (currentNode->key() > m_root->key()) {
                             m_root = currentNode;
@@ -518,7 +518,7 @@ typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
             bool reachedTheTop = false;
             Map<KeyT,T>::Node* currentNode = m_root;
             while (!reachedTheTop) {
-                currentNode = currentNode->up();
+                currentNode = currentNode->getRightNode();
                 if (currentNode != 0) {
                     if (currentNode->key() < currentKey) {
                         m_root = currentNode;
@@ -535,7 +535,7 @@ typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
             bool reachedTheBottom = false;
             Map<KeyT,T>::Node* currentNode = m_root;
             while (!reachedTheBottom) {
-                currentNode = currentNode->right();
+                currentNode = currentNode->getRightNode();
                 if (currentNode != 0) {
                     if (currentNode->key() > m_root->key()) {
                         m_root = currentNode;
@@ -547,9 +547,5 @@ typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
         }
         return *this;
     }
-
-
-
-
 
 }

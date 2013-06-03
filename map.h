@@ -105,7 +105,6 @@ public:
 
     void setMessage(key_t key ,mapped_t str);
 
-
     bool contains(Node& last, const key_t& key);
 
     mapped_t& operator[](const key_t& key);
