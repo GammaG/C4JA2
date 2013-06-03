@@ -78,15 +78,26 @@ void Map<KeyT,T>::setMessage(Map<KeyT,T>::key_t key ,Map<KeyT,T>::mapped_t str){
     n.m_pair.second = str;
 }
 
+
+
 template<class KeyT, class T>
-bool Map<KeyT,T>::Iterator::operator== (Map<KeyT,T>::Iterator& rhs){
-    return this->m_root==rhs.m_root;
+typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findFirst() {
+    if (m_left != NULL) {
+        return m_left->findFirst();
+    } else {
+        return this;
+    }
 }
 
 template<class KeyT, class T>
-bool Map<KeyT,T>::Iterator::operator!= (Map<KeyT,T>::Iterator& rhs){
-    return this->m_root!=rhs.m_root;
+typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findLast() {
+    if (m_right != NULL) {
+        return m_right->findLast();
+    } else {
+        return this;
+    }
 }
+
 
 
 /** Operatorüberladung Methode sucht einen Node der zum gegebenen Key passt,
@@ -123,6 +134,75 @@ template<class KeyT, class T>
     return counter;
 
   }
+
+  template<class KeyT, class T>
+  typename Map<KeyT,T>::Iterator Map<KeyT,T>::end() {
+          return Map<KeyT,T>::Iterator(NULL);
+      }
+
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::Iterator Map<KeyT,T>::begin() {
+          if (m_root == 0) return end();
+          return Map<KeyT,T>::Iterator(m_root->findFirst());
+      }
+
+
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::Iterator Map<KeyT,T>::beginFromLast() {
+          if (m_root == 0) return end();
+          return Map<KeyT,T>::Iterator(m_root->findLast());
+      }
+
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::Iterator Map<KeyT,T>::find(const Map<KeyT,T>::key_t& key) {
+        return Map<KeyT,T>::Iterator(m_root->find(key));
+    }
+
+
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::mapped_t& Map<KeyT,T>::Iterator::value() {
+      return this->m_root->value();
+  }
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::mapped_t& Map<KeyT,T>::Node::value(){
+      return m_pair.second;
+  }
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::key_t& Map<KeyT,T>::Node::key(){
+      return m_pair.first;
+ }
+
+
+ template<class KeyT, class T>
+ typename Map<KeyT,T>::key_t& Map<KeyT,T>::Iterator::key() {
+      return this->m_root->key();
+  }
+
+
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator=(const Map<KeyT,T>::Iterator& rhs) {
+          m_root = rhs.m_root;
+          return *this;
+      }
+
+template<class KeyT, class T>
+bool Map<KeyT,T>::Iterator::operator==(const Map<KeyT,T>::Iterator &rhs) {
+          if(this->m_root == rhs.m_root) return true; else return false;
+      }
+
+template<class KeyT, class T>
+bool Map<KeyT,T>::Iterator::operator!=(const Map<KeyT,T>::Iterator &rhs) {
+          return !(*this == rhs);
+      }
+
+
 
   /** Operatorüberladung, die Methode überschreibt die = Methode und bewirkt
   * das eine übergebene Map neu erzeugt und alle Werte kopiert werden
@@ -314,6 +394,162 @@ template<class KeyT, class T>
 typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::getRightNode(){
     return this->m_right;
 }
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
+        Map<KeyT,T>::key_t currentKey = key();
+        Map<KeyT,T>::Node* up = m_root->up();
+        Map<KeyT,T>::Node* right = m_root->right();
+        if (right != 0 && up != 0) {
+            if (up->key() > currentKey) {
+                if (up->key() < right->key()) {
+                    m_root = up;
+                } else {
+                    m_root = right;
+                    bool reachedTheBottom = false;
+                    Map<KeyT,T>::Node* currentNode = m_root;
+                    while (!reachedTheBottom) {
+                        currentNode = currentNode->left();
+                        if (currentNode != 0) {
+                            if (currentNode->key() < m_root->key()) {
+                                m_root = currentNode;
+                            }
+                        } else {
+                            reachedTheBottom = true;
+                        }
+                    }
+                }
+            } else {
+                m_root = right;
+                bool reachedTheBottom = false;
+                Map<KeyT,T>::Node* currentNode = m_root;
+                while (!reachedTheBottom) {
+                    currentNode = currentNode->left();
+                    if (currentNode != 0) {
+                        if (currentNode->key() < m_root->key()) {
+                            m_root = currentNode;
+                        }
+                    } else {
+                        reachedTheBottom = true;
+                    }
+                }
+            }
+        }
+        if (right == 0 && up != 0) {
+            if (up->key() > currentKey) {
+                m_root = up;
+            } else {
+                bool reachedTheTop = false;
+                 Map<KeyT,T>::Node* currentNode = m_root;
+                while (!reachedTheTop) {
+                    currentNode = currentNode->up();
+                    if (currentNode != 0) {
+                        if (currentNode->key() > currentKey) {
+                            m_root = currentNode;
+                            reachedTheTop = true;
+                        }
+                    } else {
+                        m_root = 0;
+                        reachedTheTop = true;
+                    }
+                }
+            }
+        }
+        if (right != 0 && up == 0) {
+            m_root = right;
+            bool reachedTheBottom = false;
+          Map<KeyT,T>::Node* currentNode = m_root;
+            while (!reachedTheBottom) {
+                currentNode = currentNode->left();
+                if (currentNode != 0) {
+                    if (currentNode->key() <  m_root->key()) {
+                        m_root = currentNode;
+                    }
+                } else {
+                    reachedTheBottom = true;
+                }
+            }
+        }
+        return *this;
+    }
+
+
+template<class KeyT, class T>
+typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
+         Map<KeyT,T>::mapped_t currentKey = key();
+         Map<KeyT,T>::Node* up = m_root->up();
+         Map<KeyT,T>::Node* left = m_root->left();
+        if (left != 0 && up != 0) {
+            if (up->key() < currentKey) {
+                if (up->key() > left->key()) {
+                    m_root = up;
+                } else {
+                    m_root = left;
+                    bool reachedTheBottom = false;
+                    Map<KeyT,T>::Node* currentNode = m_root;
+                    while (!reachedTheBottom) {
+                        currentNode = currentNode->right();
+                        if (currentNode != 0) {
+                            if (currentNode->key() > m_root->key()) {
+                                m_root = currentNode;
+                            }
+                        } else {
+                            reachedTheBottom = true;
+                        }
+                    }
+                }
+            } else {
+                m_root = left;
+                bool reachedTheBottom = false;
+                Map<KeyT,T>::Node* currentNode = m_root;
+                while (!reachedTheBottom) {
+                    currentNode = currentNode->right();
+                    if (currentNode != 0) {
+                        if (currentNode->key() > m_root->key()) {
+                            m_root = currentNode;
+                        }
+                    } else {
+                        reachedTheBottom = true;
+                    }
+                }
+            }
+        }
+        if (left == 0 && up != 0) {
+            bool reachedTheTop = false;
+            Map<KeyT,T>::Node* currentNode = m_root;
+            while (!reachedTheTop) {
+                currentNode = currentNode->up();
+                if (currentNode != 0) {
+                    if (currentNode->key() < currentKey) {
+                        m_root = currentNode;
+                        reachedTheTop = true;
+                    }
+                } else {
+                    m_root = 0;
+                    reachedTheTop = true;
+                }
+            }
+        }
+        if (left != 0 && up == 0) {
+            m_root = left;
+            bool reachedTheBottom = false;
+            Map<KeyT,T>::Node* currentNode = m_root;
+            while (!reachedTheBottom) {
+                currentNode = currentNode->right();
+                if (currentNode != 0) {
+                    if (currentNode->key() > m_root->key()) {
+                        m_root = currentNode;
+                    }
+                } else {
+                    reachedTheBottom = true;
+                }
+            }
+        }
+        return *this;
+    }
+
+
+
 
 
 }

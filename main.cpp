@@ -216,12 +216,34 @@ int main()
         templateSpace::Map<int,std::string> m;
         m[0] = "hallo";
         m[1] = "bla";
+        m[2] = "keks";
+        m[3] = "banane";
+        m[4] = "endoskopie";
+        m[5] = "haleluja";
+        m[6] = "der dicke";
+
         assert(m[0] == "hallo");
         assert(m[1] == "bla");
         cout << "should be hallo is " << m[0] << endl;
         cout << "should be bla is " << m[1] << endl;
-    }
 
+
+        cout << "From here on Nr 2.3 Iterator" << endl;
+        cout << "Starting i++ Iteration: "<< std::endl;
+        cout << "Starting i++ Iteration: "<< std::endl;
+            for (templateSpace::Map<int,std::string>::Iterator i=m.begin(); i != m.end(); i++) {
+                cout << i.key() << ": " << i.value() << endl;
+            }
+
+            cout << "\n=====================\n"<< endl;
+
+            cout << "Starting i-- Iteration: "<< endl;
+            for (templateSpace::Map<int,std::string>::Iterator i=m.beginFromLast(); i != m.end(); i--) {
+               cout << i.key() << ": " << i.value() << endl;
+            }
+
+           cout << "\n=====================\n"<< endl;
+    }
 
     cout << "all tests completed." << endl;
     cout << "Cya, I'm done here" << endl;

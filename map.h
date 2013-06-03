@@ -42,6 +42,10 @@ public:
         Node* getLeftNode();
         Node* getRightNode();
         Node* clone(Node* clone);
+        Node* findFirst();
+        Node* findLast();
+        key_t& key();
+        mapped_t& value();
         void operator= (mapped_t mapped);
 
 
@@ -65,10 +69,25 @@ public:
     public:
 
         Node* m_root;
-        explicit Iterator(const Node* node = 0 ): m_root(node){}
-        bool operator== (Iterator& node);
-        bool operator!= (Iterator& node);
-        * std::pair operator* (&Map map);
+
+        explicit Iterator(Node* node = 0 ): m_root(node){}
+        explicit Iterator(const Iterator& rhs): m_root(rhs.m_root) {}
+
+        Iterator& operator=(const Iterator& rhs);
+        mapped_t& value();
+        key_t& key();
+        Iterator& operator++();
+        Iterator& operator--();
+        bool operator==(const Iterator &rhs);
+        bool operator!=(const Iterator &rhs);
+
+        ~Iterator(){
+            if(m_root != 0){
+                delete(m_root);
+            }
+
+        }
+
 
     };
 
@@ -101,6 +120,11 @@ public:
     int increaseCounter();
 
     void operator= (Map& map);
+
+    Iterator begin();
+    Iterator beginFromLast();
+    Iterator end();
+    Iterator find(const key_t& value);
 
     ~Map() {
         if(m_root != 0){
