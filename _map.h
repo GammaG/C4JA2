@@ -137,7 +137,7 @@ template<class KeyT, class T>
 
   template<class KeyT, class T>
   typename Map<KeyT,T>::Iterator Map<KeyT,T>::end() {
-          return Map<KeyT,T>::Iterator();
+          return Map<KeyT,T>::Iterator(0);
       }
 
 
@@ -231,7 +231,7 @@ bool Map<KeyT,T>::Iterator::operator!=(const Map<KeyT,T>::Iterator &rhs) {
  template<class KeyT, class T>
  typename Map<KeyT,T>::Node& Map<KeyT,T>::find(Map<KeyT,T>::Node& last,const Map<KeyT,T>::key_t& key){
      if(last.m_pair.first==key){
-         //last.setMessage(convertInt(increaseCounter()));
+
          return last;
      }
      else if(last.m_pair.first<key){

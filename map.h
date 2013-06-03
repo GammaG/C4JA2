@@ -27,11 +27,11 @@ public:
         std::pair<key_t,mapped_t> m_pair; // key/value
         Node *m_up, *m_left, *m_right; //pointers to other nodes
 
-        explicit Node(const key_t key, const mapped_t mapped, Node* parent):
+        Node(const key_t key, const mapped_t mapped, Node* parent):
             m_pair(key,mapped), m_up(parent), m_left(0), m_right(0) {}
 
 
-        explicit Node(Node* clone):
+        Node(Node* clone):
             m_pair(clone->m_pair.first,clone->m_pair.second), m_up(clone->getUpNode()), m_left(clone->getLeftNode()), m_right(clone->getRightNode()) {}
 
 
@@ -70,8 +70,8 @@ public:
 
         Node* m_root;
 
-        explicit Iterator(Node* node = 0 ): m_root(node){}
-        explicit Iterator(const Iterator& rhs): m_root(rhs.m_root) {}
+        Iterator(Node* node = 0 ): m_root(node){}
+        Iterator(const Iterator& rhs): m_root(rhs.m_root) {}
 
         Iterator& operator=(const Iterator& rhs);
         mapped_t& value();
