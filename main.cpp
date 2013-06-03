@@ -229,16 +229,16 @@ int main()
 
 
         cout << "From here on Nr 2.3 Iterator" << endl;
-        cout << "Starting i++ Iteration: "<< std::endl;
-        cout << "Starting i++ Iteration: "<< std::endl;
-            for (templateSpace::Map<int,std::string>::Iterator i=m.begin(); i != m.end(); i++) {
+        cout << "Starting i++ Iteration: "<< endl;
+
+            for (templateSpace::Map<int,std::string>::Iterator i = m.begin(); i != m.end(); i++) {
                 cout << i.key() << ": " << i.value() << endl;
             }
 
             cout << "\n=====================\n"<< endl;
 
             cout << "Starting i-- Iteration: "<< endl;
-            for (templateSpace::Map<int,std::string>::Iterator i=m.beginFromLast(); i != m.end(); i--) {
+            for (templateSpace::Map<int,std::string>::Iterator i = m.beginFromLast(); i != m.end(); i--) {
                cout << i.key() << ": " << i.value() << endl;
             }
 

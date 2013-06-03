@@ -137,7 +137,7 @@ template<class KeyT, class T>
 
   template<class KeyT, class T>
   typename Map<KeyT,T>::Iterator Map<KeyT,T>::end() {
-          return Map<KeyT,T>::Iterator(NULL);
+          return Map<KeyT,T>::Iterator(0);
       }
 
 
