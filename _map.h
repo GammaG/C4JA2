@@ -79,7 +79,9 @@ void Map<KeyT,T>::setMessage(Map<KeyT,T>::key_t key ,Map<KeyT,T>::mapped_t str){
 }
 
 
-
+/**
+ * Methode sucht in einer Map nach der ersten Node und gibt diese zurück
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findFirst() {
     if (m_left != 0) {
@@ -89,6 +91,9 @@ typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findFirst() {
     }
 }
 
+/**
+ * Methode sucht in einer Map nach dem letzten Node und gibt diese zurück
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::findLast() {
     if (m_right != 0) {
@@ -135,12 +140,19 @@ template<class KeyT, class T>
 
   }
 
+  /**
+   * Methode gibt einen Iterator mit dem m_root = 0 zurück als zeichen das
+   * es einen Node nicht gibt.
+   */
   template<class KeyT, class T>
   typename Map<KeyT,T>::Iterator Map<KeyT,T>::end() {
           return Map<KeyT,T>::Iterator(0);
       }
 
 
+ /**
+ *  Methode gibt den ersten Node in einer übergebenen Map als Iteratorinstanz zurück.
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator Map<KeyT,T>::begin() {
           if (m_root == 0) return Map<KeyT,T>::end();
@@ -148,55 +160,81 @@ typename Map<KeyT,T>::Iterator Map<KeyT,T>::begin() {
       }
 
 
-
+ /**
+ * Methode gibt den letzen Wert einer Map als Iteratorinstanz zurück
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator Map<KeyT,T>::beginFromLast() {
           if (m_root == 0) return Map<KeyT,T>::end();
           return Map<KeyT,T>::Iterator(m_root->findLast());
       }
 
-
+ /**
+ * Methode ruft den find befehl der Map auf dieser
+ * gibt den wert der find methode des Nodes zurück.
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator Map<KeyT,T>::find(const Map<KeyT,T>::key_t& key) {
         return Map<KeyT,T>::Iterator(m_root->find(key));
     }
 
 
-
+ /**
+ * Methode gibt den mapped_t des m_pair des m_root des Iterators zurück.
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::mapped_t& Map<KeyT,T>::Iterator::value() {
       return this->m_root->value();
   }
 
+  /**
+ * Methode gibt den mapped_t des Nodes zurück.
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::mapped_t& Map<KeyT,T>::Node::value(){
       return m_pair.second;
   }
 
+
+  /**
+  * gibt den key_t aus dem m_pair des Nodes zurück
+  */
 template<class KeyT, class T>
 typename Map<KeyT,T>::key_t& Map<KeyT,T>::Node::key(){
       return m_pair.first;
  }
 
-
+  /**
+  * gibt den key_t aus dem m_pair des m_root des iterators zurück
+  */
  template<class KeyT, class T>
  typename Map<KeyT,T>::key_t& Map<KeyT,T>::Iterator::key() {
       return this->m_root->key();
   }
 
 
-
+ /**
+ *  Methode überschreibt den = operator ersetzt den aktuellen m_root des Iterators
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator=(const Map<KeyT,T>::Iterator& rhs) {
           m_root = rhs.m_root;
           return *this;
       }
 
+ /**
+ * überscheibt den == operator, gibt true oder false zurück,
+ * je nachdem ob die beiden Iteratoren gleich sind
+ */
 template<class KeyT, class T>
 bool Map<KeyT,T>::Iterator::operator==(const Map<KeyT,T>::Iterator &rhs) {
           if(this->m_root == rhs.m_root) return true; else return false;
       }
 
+/**
+ * überscheibt den != operator und gibt true oder false zurück je nachdem ob die
+ * beiden Iteratoren gleich sind
+ */
 template<class KeyT, class T>
 bool Map<KeyT,T>::Iterator::operator!=(const Map<KeyT,T>::Iterator &rhs) {
           return !(*this == rhs);
@@ -395,6 +433,12 @@ typename Map<KeyT,T>::Node* Map<KeyT,T>::Node::getRightNode(){
     return this->m_right;
 }
 
+
+
+/**
+ * operator ++ überladung .. Iterator wird ein weiter gesetzt
+ * und gibt ihn zurück
+ */
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
         Map<KeyT,T>::key_t currentKey = key();
@@ -473,6 +517,11 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
         return *this;
     }
 
+
+/**
+ * operator -- überladung .. Iterator wird ein weiter gesetzt
+ * und gibt ihn zurück
+ */
 
 template<class KeyT, class T>
 typename Map<KeyT,T>::Iterator&  Map<KeyT,T>::Iterator::operator--() {
