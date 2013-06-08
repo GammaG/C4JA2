@@ -56,7 +56,7 @@ public:
             if(m_left != 0){
             delete(m_left);
             }
-            if(m_left != 0){
+            if(m_right != 0){
             delete(m_right);
             }
 

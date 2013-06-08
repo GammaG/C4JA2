@@ -8,20 +8,20 @@ namespace MyDate  {
 
 
 class Days{
-    unsigned int m_day;
+     int m_day;
 public:
 
-    Days(unsigned int i = 0) :m_day(i){ }
+    Days( int i = 0) :m_day(i){ }
 
-    unsigned int value() const;
+    int value() const;
 
-    operator unsigned int() const;
+    operator  int() const;
 
-    void setDays(unsigned int days){
+    void setDays( int days){
         this->m_day = days;
     }
 
-    friend bool operator== (const unsigned int& i,const Days& rhs){
+    friend bool operator== (const int& i,const Days& rhs){
 
         return i == rhs.value();
 
@@ -30,19 +30,19 @@ public:
 
 
 class Months{
-    unsigned int m_month;
+     int m_month;
 public:
-    Months(unsigned int i = 0) :m_month(i){ }
-    unsigned int value() const;
+    Months( int i = 0) :m_month(i){ }
+     int value() const;
 
-    operator unsigned int() const;
+    operator  int() const;
 
 
-    void setMonths(unsigned int months){
+    void setMonths( int months){
         this->m_month = months;
     }
 
-    friend bool operator== (const unsigned int& i,const Months& lhs){
+    friend bool operator== (const  int& i,const Months& lhs){
 
     return i == lhs.value();
 
@@ -51,20 +51,20 @@ public:
 };
 
 class Years {
-    unsigned int m_year;
+     int m_year;
 public:
-    Years(unsigned int i = 0) :m_year(i){ }
-    unsigned int value() const;
+    Years( int i = 0) :m_year(i){ }
+     int value() const;
 
-    operator unsigned int() const;
+    operator  int() const;
 
 
-    void setYears(unsigned int years){
+    void setYears( int years){
         this->m_year = years;
     }
 
 
-    friend bool operator== (const unsigned int& i,const Years& lhs){
+    friend bool operator== (const  int& i,const Years& lhs){
 
     return i == lhs.value();
 
@@ -87,7 +87,7 @@ public:
     Months month() const;
     Years year() const;
 
-    static bool isLeapYear(unsigned int y);
+    static bool isLeapYear( int y);
     static Days daysInMonth(Months m = 0, Years y = 0);
 
 
@@ -132,9 +132,9 @@ Date& operator-= (const Months& lhs);
 
 Date& operator-= (const Years& lhs);
 
-Date& operator+= (const unsigned int& lhs);
+Date& operator+= (const  int& lhs);
 
-Date& operator-= (const unsigned int& lhs);
+Date& operator-= (const  int& lhs);
 
 
 Date& operator+ (const Days& lhs)const;

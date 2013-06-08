@@ -216,6 +216,7 @@ int main()
         templateSpace::Map<int,std::string> m;
         m[0] = "hallo";
         m[1] = "bla";
+        m[2] = "blub";
 
         assert(m[0] == "hallo");
         assert(m[1] == "bla");
@@ -232,12 +233,7 @@ int main()
 
             cout << "\n=====================\n"<< endl;
 
-            cout << "Starting i-- Iteration: "<< endl;
-            for (templateSpace::Map<int,std::string>::Iterator i(m.beginFromLast()); i != m.end(); --i) {
-               cout << i.key() << ": " << i.value() << endl;
-            }
 
-           cout << "\n=====================\n"<< endl;
     }
 
     cout << "all tests completed." << endl;

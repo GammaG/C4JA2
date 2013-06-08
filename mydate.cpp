@@ -10,7 +10,7 @@ using namespace MyDate;
  * @brief MyDate::Days::value
  * @return
  */
-unsigned int Days::value() const {
+ int Days::value() const {
     return m_day;
 }
 
@@ -19,7 +19,7 @@ unsigned int Days::value() const {
  * @brief value
  * @return
  */
-unsigned int Months::value() const {return m_month; }
+ int Months::value() const {return m_month; }
 
 
 /**
@@ -27,7 +27,7 @@ unsigned int Months::value() const {return m_month; }
  * @brief value
  * @return
  */
-unsigned int Years::value() const {return m_year; }
+ int Years::value() const {return m_year; }
 
 
 /**
@@ -52,16 +52,16 @@ unsigned int Years::value() const {return m_year; }
 Years Date::year() const { return years; }
 
 
-Days::operator unsigned int() const{
+Days::operator  int() const{
     return value();
 }
 
-Months::operator unsigned int() const{
+Months::operator  int() const{
     return value();
 }
 
 
-Years::operator unsigned int() const{
+Years::operator  int() const{
     return value();
 
 }
@@ -69,7 +69,7 @@ Years::operator unsigned int() const{
 /**
 * Gibt zurück ob ein übergebenes Jahr ein Schaltjahr ist.
 */
-bool MyDate::Date::isLeapYear(unsigned int y){
+bool MyDate::Date::isLeapYear( int y){
 if(y%4==0){
          if(y%100==0){
                 if(y%400==0){
@@ -117,15 +117,15 @@ MyDate::Days MyDate::Date::daysInMonth(Months m, Years y){
 *  Methode addiert die gegebenen Tage auf das Datum, zählt wenn notwendig Jahr & Monat hoch
 */
 MyDate::Date& MyDate::Date::operator+= (const Days& lhs){
-   unsigned int temp = this->days.value();
+    int temp = this->days.value();
    temp += lhs.value();
 
    while(daysInMonth(this->months,this->years).value()<temp){
       temp -= daysInMonth(this->months,this->years).value();
-      unsigned int month = this->months.value();
+       int month = this->months.value();
       month++;
       if(month > 12){
-          unsigned int year = this->years.value();
+           int year = this->years.value();
           year++;
           month = 1;
             this->years.setYears(year);
@@ -144,7 +144,7 @@ MyDate::Date& MyDate::Date::operator+= (const Days& lhs){
 * & setzt die Tage auf das Maximum des aktuellen Monates
 */
 MyDate::Date& MyDate::Date::operator+= (const Months& lhs){
-   unsigned int month = this->months.value();
+    int month = this->months.value();
    month += lhs.value();
 
    while(month > 12){
@@ -173,7 +173,7 @@ MyDate::Date& MyDate::Date::operator+= (const Months& lhs){
 * Addiert gegebene Jahre auf das Datum
 */
 MyDate::Date& MyDate::Date::operator+= (const Years& lhs){
-   unsigned int temp = this->years.value();
+    int temp = this->years.value();
    temp += lhs.value();
 
    this->years.setYears(temp);
@@ -185,7 +185,7 @@ return *this;
 /**
 * Fehlerbehandlung wenn kein spezieller Typ übergeben wird, gibt das unveränderte Datum zurück
 */
-MyDate::Date& MyDate::Date::operator+= (const unsigned int& lhs){
+MyDate::Date& MyDate::Date::operator+= (const int& lhs){
    return *this;
 
 }
@@ -196,15 +196,15 @@ MyDate::Date& MyDate::Date::operator+= (const unsigned int& lhs){
 *  zählt wenn notwendig Jahr & Monat runter
 */
 MyDate::Date& MyDate::Date::operator-= (const Days& lhs){
-   unsigned int temp = this->days.value();
+    int temp = this->days.value();
    temp -= lhs.value();
 
    while(temp<1){
 
-      unsigned int month = this->months.value();
+       int month = this->months.value();
       month--;
       if(month < 1){
-          unsigned int year = this->years.value();
+           int year = this->years.value();
           year--;
           month = 12;
             this->years.setYears(year);
@@ -224,7 +224,7 @@ MyDate::Date& MyDate::Date::operator-= (const Days& lhs){
 * & setzt die Tage auf das Maximum des aktuellen Monates
 */
 MyDate::Date& MyDate::Date::operator-= (const Months& lhs){
-   unsigned int month = this->months.value();
+    int month = this->months.value();
    month -= lhs.value();
 
 
@@ -254,7 +254,7 @@ MyDate::Date& MyDate::Date::operator-= (const Months& lhs){
 * Subtrahiert gegebene Jahre von dem Datum
 */
 MyDate::Date& MyDate::Date::operator-= (const Years& lhs){
-   unsigned int temp = this->years.value();
+    int temp = this->years.value();
    temp -= lhs.value();
 
    this->years.setYears(temp);
@@ -267,7 +267,7 @@ return *this;
 /**
 * Fehlerbehandlung wenn kein spezieller Typ übergeben wird, gibt das unveränderte Datum zurück
 */
-MyDate::Date& MyDate::Date::operator-= (const unsigned int& lhs){
+MyDate::Date& MyDate::Date::operator-= (const int& lhs){
    return *this;
 
 }
