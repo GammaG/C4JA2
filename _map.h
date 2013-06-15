@@ -479,6 +479,7 @@ typename Map<KeyT,T>::Iterator& Map<KeyT,T>::Iterator::operator++() {
                 }
             }
         }
+
         if (right == 0 && up != 0) {
             if (up->key() > currentKey) {
                 m_root = up;

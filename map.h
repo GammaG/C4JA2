@@ -81,12 +81,8 @@ public:
         bool operator==(const Iterator &rhs);
         bool operator!=(const Iterator &rhs);
 
-        ~Iterator(){
-            if(m_root != 0){
-                delete(m_root);
-            }
 
-        }
+
 
 
     };
